@@ -1,4 +1,4 @@
-package ies.thiar;
+package ies.thiar.pruebas;
 /**
  * Prueba
  */
