@@ -12,6 +12,5 @@ public class Prueba {
             System.out.println(i);
         }
 
-
     }
 }
