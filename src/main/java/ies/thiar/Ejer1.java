@@ -18,9 +18,6 @@ public class Ejer1 {
         for (int i = 0; i < numeros.length; i++) {
             System.out.println("Indice: "+i+" tiene el valor "+numeros[i]);
         }
-
-
-
-
+        teclado.close();
     }
 }

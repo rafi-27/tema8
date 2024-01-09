@@ -15,5 +15,6 @@ public class Ejer2 {
             suma+=numeros[i];
         }
         System.out.println("La suma total es de: "+suma);
+    teclado.close();
     }
 }
