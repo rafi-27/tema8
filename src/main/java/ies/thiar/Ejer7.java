@@ -10,14 +10,13 @@ public class Ejer7 {
         System.out.println("Introduce el segundo valor: ");
         int numeroQ = teclado.nextInt();
 
-        if (numeroQ<numeroP) {
+        if (numeroP>numeroQ) {
             int aux;
             aux = numeroP;
-            numeroQ = numeroP;
-            numeroP = aux;
-        }
+            numeroP = numeroQ;
+            numeroQ = aux;
 
-        int[] numero = new int[(numeroQ-numeroP)];
+            int[] numero = new int[(numeroQ-numeroP)];
         
         for (int i = 0; i < numero.length; i++) {
             numero[i]=numeroP;
@@ -25,5 +24,15 @@ public class Ejer7 {
             numeroP++;
         }
         teclado.close();
+        }else{
+            int[] numero = new int[(numeroQ-numeroP)];
+        
+        for (int i = 0; i < numero.length; i++) {
+            numero[i]=numeroP;
+            System.out.println(numero[i]);
+            numeroP++;
+        }
+        teclado.close();
+        }
     }
 }
