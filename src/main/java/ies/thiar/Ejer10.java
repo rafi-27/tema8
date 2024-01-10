@@ -50,5 +50,6 @@ public class Ejer10 {
          System.out.println("Altura media: "+media);
          System.out.println("Altura maxima: "+maxima+" y la minima ha sido de "+minima);
          System.out.println("Por encima de la altura promedio hay "+contPorEncima+" y por debajo hay "+contPorDebajo);
+    teclado.close();
     }
 }
