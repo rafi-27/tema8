@@ -1,6 +1,5 @@
 package ies.thiar;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ejer9 {
@@ -26,8 +25,11 @@ public class Ejer9 {
             numeroN = teclado.nextInt();
          }
 
-         Arrays.sort(numeros);
-         System.out.println("El numero "+numeroN+" aparece "+Arrays.binarySearch(numeros,numeroN)+" veces");
+         for (int i = 0; i < numeros.length; i++) {
+            if (numeros[i]==numeroN) {
+                System.out.println("El numero "+numeroN+" se encuentra en los indices: "+i);
+            }
+         }
         teclado.close();
     }
 }
