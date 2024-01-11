@@ -14,7 +14,6 @@ public class Ejer8 {
          double[] numeros = new double[100];
         
         int contSupeiror=0;
-        int contIguales=0;
 
          for (int i = 0; i < numeros.length; i++) {
             numeros[i] = Math.random();
@@ -24,21 +23,16 @@ public class Ejer8 {
         System.out.println(random);
 
         System.out.println("Escribe un numero real: ");
-        //double numeroReal = teclado.nextDouble();
-        //teclado.nextLine();
-        double numeroReal = random;
+        double numeroReal = teclado.nextDouble();
+        //double numeroReal = random;
 
         for (int i = 0; i < numeros.length; i++) {
-            if (numeros[i] == numeroReal) {
-                contIguales++;
-            }
-            if (numeros[i] > numeroReal) {
+            if (numeros[i] >= numeroReal) {
                 contSupeiror++;
             }
         }
 
-        System.out.println("Iguales hay: "+contIguales);
-        System.out.println("Superiores hay: "+contSupeiror);
+        System.out.println("Hay superiores o iguales hay: "+contSupeiror);
         teclado.close();
     }
 }

@@ -16,7 +16,7 @@ public class Ejer7 {
             numeroP = numeroQ;
             numeroQ = aux;
 
-            int[] numero = new int[(numeroQ-numeroP)];
+            int[] numero = new int[(numeroQ-numeroP)+1];
         
         for (int i = 0; i < numero.length; i++) {
             numero[i]=numeroP;
@@ -25,7 +25,7 @@ public class Ejer7 {
         }
         teclado.close();
         }else{
-            int[] numero = new int[(numeroQ-numeroP)];
+            int[] numero = new int[(numeroQ-numeroP)+1];
         
         for (int i = 0; i < numero.length; i++) {
             numero[i]=numeroP;
