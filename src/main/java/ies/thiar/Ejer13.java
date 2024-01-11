@@ -7,11 +7,11 @@ public class Ejer13 {
     }
 
     public static void SecuenciaAritmetica(int numerV, int numerI, int valoresN){
-        int[] aritmetica = new int[valoresN];
+        int[] aritmetica = new int[valoresN+1];
 
         for (int i = numerV; i < aritmetica.length; i++) {
             System.out.print(aritmetica[i]+" ");
-            aritmetica[i]+=numerI;
+            //aritmetica[i]+=numerI;
         }
 
 
