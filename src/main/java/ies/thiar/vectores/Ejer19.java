@@ -1,6 +1,7 @@
 package ies.thiar.vectores;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Ejer19 {
@@ -17,7 +18,7 @@ public class Ejer19 {
 
     public static void puntuaciones(int cantidad){
         Scanner teclado = new Scanner(System.in);
-        int[] puntuaciones = new int[cantidad];
+        Integer[] puntuaciones = new Integer[cantidad];
         
         for (int i = 0; i < puntuaciones.length; i++) {
             int numero;
@@ -34,11 +35,14 @@ public class Ejer19 {
             }
         }
         
-        Arrays.sort(puntuaciones);
+        Arrays.sort(puntuaciones, Collections.reverseOrder());
         System.out.println("Puntuaciones en orden Descendente:");
-        for (int i = puntuaciones.length-1; i < puntuaciones.length; i--) {
-            System.out.println(puntuaciones[i]);
+        for (Integer integer : puntuaciones) {
+            System.out.println(integer);
         }
+        //for (int i = puntuaciones.length-1; i < puntuaciones.length; i--) {
+          //  System.out.println(puntuaciones[i]);
+        //}
         teclado.close();
     }
 }
