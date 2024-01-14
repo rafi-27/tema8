@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Ejer251 {
     public static void main(String[] args) {
-        brechaSalarial(2);
+        brechaSalarial(4);
     }
 
     public static void brechaSalarial(int numPersonas) {
@@ -55,6 +55,13 @@ public class Ejer251 {
         }else if (mediaMujeres>mediaHombres) {
             System.out.println("Hay " + contVarón + " varónes y " + conMujer + " mujeres "
         + "la media salarial de los hombres es " + resulH + " y de las mujeres " + resulF+" a favor de las mujeres.");
+        }
+
+        for (int i = 0; i < datosSalarios.length; i++) {
+            for (int j = 0; j < datosSalarios[0].length; j++) {
+                System.out.print(datosSalarios[i][j]+":");
+            }
+            System.out.println();
         }
         teclado.close();
     }
