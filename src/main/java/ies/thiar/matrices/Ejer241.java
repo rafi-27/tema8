@@ -51,5 +51,6 @@ public class Ejer241 {
             cont++;
             System.out.println();
         }
+        teclado.close();
     }
 }

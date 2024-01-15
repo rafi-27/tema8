@@ -40,6 +40,7 @@ public class EjerAlturas {
             default:
                 break;
         }
+        teclado.close();
     }
 
     public static Float añadirAltura(Float altura){

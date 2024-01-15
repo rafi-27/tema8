@@ -17,6 +17,7 @@ public class ejer2 {
         for (Float float1 : alturaAlumnos) {
             System.out.println(float1);
         }
+        teclado.close();
     }
 
 
