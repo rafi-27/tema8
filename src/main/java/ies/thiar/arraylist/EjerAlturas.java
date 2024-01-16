@@ -72,6 +72,10 @@ public class EjerAlturas {
         lista.toString();
     }
 
+    public static void borarEnPosicion(ArrayList<Float>lista, int posi){
+        lista.remove(posi);
+    }
+
     public static void menu(){
         System.out.println("a) Añadir altura.");
         System.out.println("b) Mostrar lista actual con el número de posición.");
