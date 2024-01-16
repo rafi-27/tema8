@@ -33,7 +33,7 @@ public class EjerAlturas {
                     }
                     break;
                 case "b":
-                    mostrarLista(alturaAlumnos);
+                    System.out.println(mostrarLista(alturaAlumnos));
                     break;
                 case "c":
 
@@ -59,21 +59,30 @@ public class EjerAlturas {
         teclado.close();
     }
 
-    public static boolean añadirAltura(ArrayList<Float> lista,float altura){
+    public static ArrayList<Float> añadirAltura(ArrayList<Float> lista,float altura){
+        DecimalFormat format = new DecimalFormat("#.00");
         if (altura>0.5 && altura<2.50) {
             lista.add(altura);
-            return true;
-        }else{
-            return false;
+            return lista;
         }
+        return lista;
     }
 
-    public static void mostrarLista(ArrayList<Float>lista){
-        lista.toString();
+    public static String mostrarLista(ArrayList<Float>lista){
+        return lista.toString();
     }
 
     public static void borarEnPosicion(ArrayList<Float>lista, int posi){
         lista.remove(posi);
+    }
+
+    public static void borrarAltura(ArrayList<Float>lista, Float altura){
+        int numLista = lista.size();
+        for (int i = 0; i < numLista; i++) {
+            if (lista==altura) {
+                lista.remove(i);
+            }
+        }
     }
 
     public static void menu(){
