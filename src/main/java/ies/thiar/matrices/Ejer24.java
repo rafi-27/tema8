@@ -7,7 +7,10 @@ public class Ejer24 {
      /**
       * Necesitamos crear un programa para almacenar las notas de 4 alumnos (llamados
       * “Alumno 1”, “Alumno 2”, etc.) y 5 asignaturas. El usuario introducirá las notas por
-      * teclado y luego el programa mostrará la nota mínima, máxima y media de cada alumno. */
+      * teclado y luego el programa mostrará la nota mínima, máxima y media de cada alumno.
+      * for(int[] elemento: sueldos) 
+      * for(int entero: elemento) 
+      */
       Scanner teclado = new Scanner(System.in);
       float[][] alumnos = new float[4][5];
         float minima = 9999999;
