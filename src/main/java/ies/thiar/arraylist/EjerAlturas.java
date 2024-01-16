@@ -15,40 +15,62 @@ public class EjerAlturas {
          */
         
         ArrayList <Float>alturaAlumnos = new ArrayList<Float>();
-        menu();
-        String letra = teclado.next();
-
-        float numero = teclado.nextFloat();
-        alturaAlumnos.add(añadirAltura(numero));
-
-        for (Float float1 : alturaAlumnos) {
-            System.out.println(float1);
-        }
-
-        switch (letra) {
-            case "a":
-            System.out.println("Introduce altura: ");
-                float altura = teclado.nextFloat();
-                if (altura>0.50 || altura < 2.50) {
-                    alturaAlumnos.add(añadirAltura(altura));
-                }else{
-                    System.err.println("La altura tiene que estar entre 0,50 y 2,50.");
-                }
-
-                break;
         
-            default:
-                break;
+        boolean salir=false;
+        
+        while (!salir) {
+            menu();
+            String letra = teclado.next();
+
+            switch (letra) {
+                case "a":
+                    System.out.println("Introduce altura: ");
+                    float altura = teclado.nextFloat();
+                    if (altura>0.50 || altura < 2.50) {
+                        añadirAltura(alturaAlumnos, altura);
+                    }else{
+                        System.err.println("La altura tiene que estar entre 0,50 y 2,50.");
+                    }
+                    break;
+                case "b":
+                    mostrarLista(alturaAlumnos);
+                    break;
+                case "c":
+
+                    break;
+
+                case "d":
+
+                    break;
+
+                case "e":
+
+
+                    break;
+
+                case "0":
+                    salir=true;
+                    break;
+                default:
+                    System.err.println("Opcion incorrecta!");
+                    break;
+            }   
         }
         teclado.close();
     }
 
-    public static Float añadirAltura(Float altura){
-        DecimalFormat formatoDeAlturas = new DecimalFormat("#.##");
-        return Float.parseFloat(formatoDeAlturas.format(altura));
+    public static boolean añadirAltura(ArrayList<Float> lista,float altura){
+        if (altura>0.5 && altura<2.50) {
+            lista.add(altura);
+            return true;
+        }else{
+            return false;
+        }
     }
 
-
+    public static void mostrarLista(ArrayList<Float>lista){
+        lista.toString();
+    }
 
     public static void menu(){
         System.out.println("a) Añadir altura.");
@@ -56,6 +78,8 @@ public class EjerAlturas {
         System.out.println("c) Eliminar por posición. Se le pasa como parámetro una posición y elimina la altura en dicha posición.");
         System.out.println("d) Eliminar por valor. Se le pasa como parámetro una altura y elimina todas las posiciones en las que se encuentre dicha altura. Devuelve la cantidad de eliminaciones.");
         System.out.println("e) Ordenar la lista.");
-
+        System.out.println("0 para salir.");
+        System.out.println();
+        System.out.println("Introduce la opcion que quieras: ");
     }
 }

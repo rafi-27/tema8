@@ -30,5 +30,6 @@ public class EjerD {
             System.out.println("Su nota máxima es: " + notaMaxima);
             System.out.println("Su nota mínima es: " + notaMinima);
     }
+    lector.close();
 }
 }
