@@ -79,9 +79,9 @@ public class EjerAlturas {
     public static void borrarAltura(ArrayList<Float>lista, Float altura){
         int numLista = lista.size();
         for (int i = 0; i < numLista; i++) {
-            if (lista==altura) {
-                lista.remove(i);
-            }
+            //if () {
+              //  lista.remove(i);
+           // }
         }
     }
 
