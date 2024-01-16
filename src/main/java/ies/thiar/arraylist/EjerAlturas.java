@@ -2,7 +2,6 @@ package ies.thiar.arraylist;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -66,7 +65,6 @@ public class EjerAlturas {
     }
 
     public static ArrayList<Float> añadirAltura(ArrayList<Float> lista, float altura) {
-        DecimalFormat format = new DecimalFormat("#.00");
         if (altura > 0.5 && altura < 2.50) {
             lista.add(altura);
             return lista;

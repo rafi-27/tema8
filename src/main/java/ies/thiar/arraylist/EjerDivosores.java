@@ -12,6 +12,7 @@ public class EjerDivosores {
          Scanner teclado = new Scanner(System.in);
          int n = teclado.nextInt();
          System.out.println(divisores(n));
+         teclado.close();
     }
 
     public static ArrayList<Integer> divisores(int numero){
