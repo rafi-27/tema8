@@ -93,13 +93,9 @@ public class EjerFacturas {
     }
 
     // mostrar la factura.
-    public static void mostrarLista() {
-        Iterator iter = nuevaLinea.iterator();
-
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
-        }
-    }
+    //public String toString {
+      //  return " Factura";
+    //}
 
     // Importe total: inicialmente cero, y se va actualizando siempre que se
     // añadan/eliminen líneas.
@@ -180,6 +176,15 @@ class lineaFactura {
             return precioUnitario*cantidadUnidades;
         }
     }
+
+    public static void main(String[] args) {
+        
+
+
+    }
+
+
+
 
 
 
