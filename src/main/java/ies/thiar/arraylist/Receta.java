@@ -57,8 +57,8 @@ public class Receta {
     //Mostraremos la lista:
     @Override
     public String toString() {
-        return "Receta nombre=" + nombre + ", elavoracionPasos=" + elavoracionPasos + ", duracion=" + duracion
-                + ", listaIngrediente=" + Arrays.toString(listaIngrediente);
+        return "Receta nombre=" + nombre + ", Pasos para elavoracion=" + elavoracionPasos + ", duracion=" + duracion + " min"
+                + ", lista de Ingredientes=" + Arrays.toString(listaIngrediente);
     }
 }
 
@@ -102,6 +102,11 @@ class Ingrediente {
         this.unidad = unidad;
     }
 
+    @Override
+    public String toString() {
+        return "nombre=" + nombre + ", cantidad=" + cantidad + ", unidad=" + unidad;
+    }
+
     /**
      * Main
      * @param args
@@ -127,34 +132,27 @@ class Ingrediente {
         int duracion = teclado.nextInt();
         System.out.println("Cuantos ingredientes necesitas: ");
         int ingre = teclado.nextInt();
+       
+        teclado.nextLine(); // Consumir la nueva línea pendiente después de nextInt()
 
         Ingrediente[] ingredientes = new Ingrediente[ingre];
-
+        
         int cont=1;
-
         for (int i = 0; i < ingredientes.length; i++) {
             System.out.println("Nombre ingrediente: "+cont);
             String name = teclado.nextLine();
+            teclado.next();
             System.out.println("Cantidad un numero float: ");
             float canti = teclado.nextFloat();
+            teclado.nextLine(); // Consumir la nueva línea pendiente después de nextFloat()
             System.out.println("Unidad de medicion en gramos o mililitros si es un ingrediente loquido: ");
             String uniti = teclado.nextLine();
             cont++;
+            ingredientes[i] = new Ingrediente(name, canti, uniti);
         }
 
         Receta tortillaFrancesa = new Receta(nombreReceta, pasosARealizar, duracion, ingredientes);
-
-
-
-
-
-
-
-
-
-
-
-
+        System.out.println(tortillaFrancesa.toString());
 
         teclado.close();
     }
