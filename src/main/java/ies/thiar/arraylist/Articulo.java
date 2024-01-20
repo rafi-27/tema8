@@ -3,6 +3,8 @@ package ies.thiar.arraylist;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 /**
  * Clase Articulo:
  */
@@ -13,30 +15,23 @@ public class Articulo {
      * creados y
      * así el identificador será único.
      */
-    private static int identificador;
-    private static String nombreProducto;
+    private static int cont = 0;
+    private final int identificador = ++cont;
+    private final String nombreProducto;
     private double precioVenta;
     private double precioCompra;
     private static int iva = 21;
     private int stock;
 
-    private static int cont = 1;
-
     public Articulo(String name, double precioDeCompra, double precioDeVenta, int stockEnAlmacen) {
         this.nombreProducto = name;
         setPrecioCompra(precioDeCompra);
         setPrecioVenta(precioDeVenta);
-        this.stock = stockEnAlmacen;
-        this.identificador = cont;
-        cont++;
+        setStock(stockEnAlmacen);
     }
 
-    public static String getNombreProducto() {
+    public String getNombreProducto() {
         return nombreProducto;
-    }
-
-    public static void setNombreProducto(String nombreProducto) {
-        Articulo.nombreProducto = nombreProducto;
     }
 
     public double getPrecioVenta() {
@@ -44,7 +39,7 @@ public class Articulo {
     }
 
     // Revisar:
-    public void setPrecioVenta(double precioVenta) {
+    public void setPrecioCompra(double precioVenta) {
         if (precioVenta > getPrecioCompra() && precioVenta > 0) {
             this.precioVenta = precioVenta;
         } else {
@@ -57,7 +52,7 @@ public class Articulo {
         return precioCompra;
     }
 
-    public void setPrecioCompra(double precioCompra) {
+    public void setPrecioVenta(double precioCompra) {
         if (precioCompra > 0) {
             this.precioCompra = precioCompra;
         } else {
@@ -83,20 +78,25 @@ public class Articulo {
     // Metodos los dos publicos uno para vender y otro
 
     // Empezamos con vender y añadirle el iva:
-    public void metodoVender(int cuantasUnidadesVenderas) {
+    public boolean metodoVender(int cuantasUnidadesVenderas) {
         if (cuantasUnidadesVenderas <= this.stock && cuantasUnidadesVenderas > 0) {
             this.stock -= cuantasUnidadesVenderas;
-            double operacion = (cuantasUnidadesVenderas * precioCompra * (100 - iva) / 100);
-            System.out.println("Venta realizada con exito.");
+            return true;
+            //System.out.println("Venta realizada con exito.");
         } else {
-            System.err.println("Error en la cantidad a vender especificada.");
+            return false;
+            //System.err.println("Error en la cantidad a vender especificada.");
         }
     }
-
     // Se le compra al proveedor:
-    public void metodoComprar(int cantidadUnidadesComprar) {
+    public boolean metodoComprar(int cantidadUnidadesComprar) {
         this.stock += cantidadUnidadesComprar;
-        System.out.println("Compra realizada con exito.");
+        return true;
+        //System.out.println("Compra realizada con exito.");
+    }
+
+    public int getIdentificador() {
+        return identificador;
     }
 
     /**
@@ -105,12 +105,11 @@ public class Articulo {
      * stock.
      */
 
-    public void mostrarDatosArticulo() {
-        System.out.println("ID articulo " + identificador + " nombre: " + nombreProducto + " porcentage de iva " + iva
-                + " en stock hay " + stock);
-    }
     /** Creo un toString */
-
+    public String toString() {
+        return "Articulo [identificador=" + identificador + ", nombreProducto=" + nombreProducto + ", precioVenta="
+                + precioVenta + ", precioCompra=" + precioCompra + ", stock=" + stock + "]";
+    }
 }
 
 /** Clase Tienda: */
@@ -120,7 +119,7 @@ class Tienda {
     static Scanner teclado = new Scanner(System.in);
 
     // Primer menu.
-    void menuUnoPrincipal() {
+    static void menuUnoPrincipal() {
         System.out.println("Selecciona una opcion: ");
         System.out.println("1. Mostrar artículos.\r\n" + //
                 "2. Venta a cliente.\r\n" + //
@@ -128,42 +127,24 @@ class Tienda {
                 "4. Gestionar artículos.\r\n" + //
                 "5. Salir.");
         System.out.println("Opcion: ");
-        int num = teclado.nextInt(); // opcion de menu uno.
         boolean sali = false; // boolean para un while.
         while (!sali) {
+            int num = teclado.nextInt(); // opcion de menu uno.
             switch (num) {
                 case 1:
-
+                    mostrarArticulos();
                     break;
                 case 2:
-
+                    venderArticulo();
                     break;
                 case 3:
-
+                    comprarAlProveedor();
                     break;
                 case 4:
-                subMenu();
-                switch (subMenu()) {
-                    case 1:
-                        
-                        break;
-                    case 2:
-
-                        break;
-
-                    case 3:
-
-                        break;
-                    case 4:
-                        menuUnoPrincipal();
-                        break;
-                    default:
-                    System.err.println("Opcion incorrecta.");
-                        break;
-                }
+                    subMenu();
                     break;
                 case 5:
-                sali=true;
+                    sali = true;
                     break;
                 default:
                     System.err.println("Opcion incorrecta.");
@@ -171,44 +152,164 @@ class Tienda {
             }
         }
     }
+
     // Creo un array list:
     static ArrayList<Articulo> articulo = new ArrayList<>();
 
-
     // Primera opcion mostrar articulos:
     public static void mostrarArticulos() {
-
+        for (int i = 0; i < articulo.size(); i++) {
+            System.out.println(articulo.get(i));
+        }
     }
 
     // Funcion para vender.
     public static void venderArticulo() {
+        System.out.println("Identificador");
+        int id = teclado.nextInt();
+        System.out.println("Cantidad de unidades: ");
+        int canti = teclado.nextInt();
+        System.out.println("Nombre del comprador: ");
+        String name = teclado.nextLine();
 
+        double precio = articulo.get(id).getPrecioVenta();
+        double precioTotal = (canti * precio * 21 / 100);
+
+        for (int i = 0; i < articulo.size(); i++) {
+            if (articulo.get(i).getIdentificador() == id && articulo.get(id).getStock() < canti) {
+                System.out.println("Total a pagar: " + precioTotal);
+                System.out.println("¿Desea seguir con la compra?(si/no).");
+                String respuesta = teclado.nextLine();
+                respuesta.toLowerCase();
+                if (respuesta.equals("si")) {
+                    articulo.get(id).setStock(articulo.get(id).getStock() - canti);
+                    System.out.println("Operacion realizada con exito.");
+                } else if (respuesta.equals("no")) {
+                    System.err.println("Operacion cancelada");
+                }
+            }
+        }
     }
 
     // Comprar al proveedor.
     public static void comprarAlProveedor() {
+        System.out.println("Identificador");
+        int identi = teclado.nextInt();
+        System.out.println("Cantidad de unidades deseada.");
+        int cantidadDeseada = teclado.nextInt();
 
+        double totalAPagar = cantidadDeseada * articulo.get(identi).getPrecioCompra();
+        for (int i = 0; i < articulo.size(); i++) {
+            if (articulo.get(i).getIdentificador() == identi) {
+                System.out.println("Cantidad a pagar " + totalAPagar);
+                System.out.println("¿Desea seguir con la compra?(si/no).");
+                String respuesta = teclado.nextLine();
+                respuesta.toLowerCase();
+                if (respuesta.equals("si")) {
+                    articulo.get(identi).setStock(articulo.get(identi).getStock() + cantidadDeseada);
+                    System.out.println("Operacion realizada con exito.");
+                } else if (respuesta.equals("no")) {
+                    System.err.println("Operacion cancelada");
+                }
+            }
+        }
     }
 
     // Submenu con 3 opciones.
-    int subMenu() {
-        System.out.println("Seleciona una opcion de las siguentes: ");
-        System.out.println("‘1. Añadir artículo’, \n‘2.Editar artículo’, \n‘3. Eliminar artículo’ \n‘4. Volver’.");
-        int num = teclado.nextInt();
-        return num;
+    static void subMenu() {
+        boolean salir = false;
+        while (!salir) {
+            System.out.println("Seleciona una opcion de las siguentes: ");
+            System.out.println("1. Añadir artículo \n2.Editar artículo \n3. Eliminar artículo \n4. Volver");
+            int numerin = teclado.nextInt();
+            switch (numerin) {
+                case 1:
+                    aniadirArticulo();
+                    break;
+                case 2:
+                    editarArticulo();
+                    break;
+                case 3:
+                    eliminarProductSubmenu();
+                    break;
+                case 4:
+                    menuUnoPrincipal();
+                    salir=true;
+                    break;
+                default:
+                    System.err.println("Opcion incorrecta.");
+                    break;
+            }
+        }
     }
+
     // Aqui agregamos las funciones del submenu.
-    public static void aniadirArticulo(){
+    // Funcion para añadir articulos. se pediran datos que luego se almacenan en
+    // article y añadir a un arraylist principal..
+    public static void aniadirArticulo() {
         System.out.println("Nombre del producto: ");
         String name = teclado.nextLine();
+        teclado.nextLine();
         System.out.println("Precio de venta: ");
         double price = teclado.nextDouble();
+        teclado.nextLine();
         System.out.println("Precio de compra al proveedor: ");
         double priceProveedor = teclado.nextDouble();
+        teclado.nextLine();
         System.out.println("Unidades en stock: ");
         int stockUniti = teclado.nextInt();
-
+        teclado.nextLine();
         Articulo article = new Articulo(name, price, priceProveedor, stockUniti);
         articulo.add(article);
+    }
+
+    // Funcion para editar un articulo el nombre es final asique podremos modificar
+    // los otros atributos:
+    public static void editarArticulo() {
+        System.out.println("Cual es el id del articulo: ");
+        // En mi caso el id de los productos van a ser los numeros naturales ordenados
+        // 1,2,3,4....
+        int id = teclado.nextInt();
+        for (int i = 0; i < articulo.size(); i++) {
+            if (articulo.get(i).getIdentificador() == id) {
+                System.out.println("Nuevo precio para el articulo de venta: " + id);
+                double newPriceVen = teclado.nextDouble();
+                System.out.println("Precio compra al proveedor: ");
+                double newPriceComProv = teclado.nextDouble();
+                System.out.println("Unidades en stock: ");
+                int unitisStock = teclado.nextInt();
+                // Agregamos los datos.
+                articulo.get(id).setPrecioCompra(newPriceComProv);
+                articulo.get(id).setPrecioCompra(newPriceVen);
+                articulo.get(id).setStock(unitisStock);
+            }
+        }
+    }
+
+    // Funcion eliminar producto.
+    public static void eliminarProductSubmenu() {
+        System.out.println("Cual es el id del articulo: ");
+        // En mi caso el id de los productos van a ser los numeros naturales ordenados
+        // 1,2,3,4....
+        int id = teclado.nextInt();
+        for (int i = 0; i < articulo.size(); i++) {
+            if (articulo.get(i).getIdentificador() == id) {
+                articulo.remove(i);
+            } else
+                System.err.println("id inválido");
+        }
+    }
+
+    /**
+     * Programa main
+     */
+
+    public static void main(String[] args) {
+        menuUnoPrincipal();
+
+        //Lista fallos:
+        /**
+         * 1. Venta
+         */
     }
 }
