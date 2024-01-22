@@ -1,399 +1,340 @@
+package ies.thiar.pruebas;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
-import static java.lang.System.exit;
-
-class Articulo {
-    public static int contador = 0;
-    private final int identificador = ++contador;
-    private final String nombre;
-    private float precioCompra;
-    private float precioVenta;
-    private static final int iva = 21;
+/**
+ * Clase Articulo:
+ */
+public class Arraysprueba {
+    /**
+     * . El identificador ha de establecerse
+     * automáticamente y ser único, podemos llevar un contador de los objetos
+     * creados y
+     * así el identificador será único.
+     */
+    private static int cont = 0;
+    private final int identificador = ++cont;
+    private final String nombreProducto;
+    private double precioVenta;
+    private double precioCompra;
+    private static int iva = 21;
     private int stock;
 
-    /*
-    Constructor
-     */
-    public Articulo(String nombre, float precioCompra, float precioVenta, int stock) {
-        this.nombre = nombre;
-        setPrecioCompra(precioCompra);
-        setPrecioVenta(precioVenta);
-        setStock(stock);
+    public Arraysprueba(String name, double precioDeVenta,double precioDeCompra, int stockEnAlmacen) {
+        this.nombreProducto = name;
+        setPrecioCompra(precioDeCompra);
+        setPrecioVenta(precioDeVenta);
+        setStock(stockEnAlmacen);
     }
 
-    /*
-    Setters
-     */
-    public void setPrecioCompra(float precioCompra) {
-        // Verifica que el precio de compra no sea negativo, si lo es, establece un valor predeterminado de 1.
-        if (precioCompra < 0) {
-            System.err.println("Valor inválido, valor reestablecido");
-            this.precioCompra = 1;
-        } else this.precioCompra = precioCompra;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setPrecioVenta(float precioVenta) {
-        // Verifica que el precio de venta no sea negativo o menor que el precio de compra, si lo es, ajusta el valor.
-        if (precioVenta < this.precioCompra && precioVenta < 0) {
-            System.err.println("Valor inválido, aplicando solución");
-            precioVenta = precioCompra + 1;
-        } else this.precioVenta = precioVenta;
+    public double getPrecioVenta() {
+        return precioVenta;
     }
 
-
-    public void setStock(int stock) {
-        // Verifica que la cantidad de stock no sea negativa.
-        if (stock < 0) {
-            System.err.println("Parámetro erroneo");
-        } else this.stock = stock;
+    // Revisar:
+    public void setPrecioCompra(double precioCompra) {
+        if (precioCompra > 0) {
+            this.precioCompra = precioCompra;
+        } else {
+            System.err.println("Cantidad precio venta incorrecta.");
+            this.precioVenta = 0;
+        }
     }
 
-    /*
-    Getters
-     */
-    public int getIdentificador() {
-        return identificador;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public float getPrecioCompra() {
+    public double getPrecioCompra() {
         return precioCompra;
     }
 
-    public float getPrecioVenta() {
-        return precioVenta;
+    public void setPrecioVenta(double precioVenta) {
+        if (precioVenta > getPrecioCompra() && precioVenta > 0) {
+            this.precioVenta = precioVenta;
+        } else {
+            System.err.println("Cantidad precio compra al proveedor incorrecta.");
+            this.precioCompra = 0;
+        }
     }
 
     public int getStock() {
         return stock;
     }
 
-    /*
-    Métodos
-     */
-    public boolean vender(int cantidad) {
-        // Verifica si hay suficiente stock para realizar la venta y actualiza la cantidad de stock.
-        if (cantidad > stock) {
-            System.err.println("Venta interrumpida");
-            return false;
+    public void setStock(int stock) {
+        if (stock > 0) {
+            this.stock = stock;
+        } else {
+            System.err.println("Cantidad de stock incorrecta.");
+            this.stock = 0;
         }
-        setStock(this.stock - cantidad);
-        return true;
     }
 
-    public boolean comprar(int cantidad) {
-        // Incrementa la cantidad de stock al realizar una compra.
-        setStock(this.stock + cantidad);
+    // Metodos los dos publicos uno para vender y otro
+    // Empezamos con vender y añadirle el iva:
+    public boolean metodoVender(int cuantasUnidadesVenderas) {
+        if (cuantasUnidadesVenderas <= this.stock && cuantasUnidadesVenderas > 0) {
+            this.stock -= cuantasUnidadesVenderas;
+            return true;
+            //System.out.println("Venta realizada con exito.");
+        } else {
+            return false;
+            //System.err.println("Error en la cantidad a vender especificada.");
+        }
+    }
+    // Se le compra al proveedor:
+    public boolean metodoComprar(int cantidadUnidadesComprar) {
+        this.stock += cantidadUnidadesComprar;
         return true;
+        //System.out.println("Compra realizada con exito.");
     }
 
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    /**
+     * • Deberá tener un método público que devuelva una cadena de texto de una sola
+     * línea con la información sobre dicho artículo: id, nombre, precios, IVA y
+     * stock.
+     */
+
+    /** Creo un toString */
     public String toString() {
-        return "Articulo{" +
-                "identificador=" + identificador +
-                ", nombre='" + nombre + '\'' +
-                ", precioCompra=" + precioCompra +
-                ", precioVenta=" + precioVenta +
-                ", stock=" + stock +
-                '}';
+        return "Articulo [identificador=" + identificador + ", nombreProducto=" + nombreProducto + ", precioVenta="
+                + precioVenta + ", precioCompra=" + precioCompra + ", stock=" + stock + "]";
+    }
+
+    public void mostrarDatos(){
+        System.out.println("ID "+identificador+" nombre articulo "+nombreProducto+" el precio de venta "+precioVenta+" precio de compra "+precioCompra+" cantidad de unidades "+stock);
     }
 }
 
+/** Clase Tienda: */
+
 class Tienda {
-    /**
-     * Pide al usuario introducir los datos necesarios para realizar una venta y comprueba si los datos son correctos
-     * @param listaArtículos Se le introduce la lista de artículos
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> realizarVenta(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        int id=999999999, cantidad = 0;
-        String nombreComprador;
+    // metodo estatico para scanner en la clase.
+    static Scanner teclado = new Scanner(System.in);
 
-        System.out.print("Introduce el identificador del artículo: ");
-        String auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) id = Integer.parseInt(auxiliar);
-        else System.err.println("Identificador inválido");
-
-        System.out.print("Introduce el nombre del comprador: ");
-        auxiliar = lector.nextLine();
-        if (auxiliar.matches("[a-zA-Z]+")) nombreComprador=auxiliar;
-        else System.err.println("Nombre inválido");
-
-        System.out.print("Introduce la cantidad a comprar: ");
-        auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) cantidad = Integer.parseInt(auxiliar);
-        else System.err.println("Cantidad inválida");
-
-        for (int i = 0; i < listaArtículos.size(); i++) {
-            if (listaArtículos.get(i).getIdentificador() == id) confirmarVenta(listaArtículos, id, cantidad);
-        }
-        return listaArtículos;
+    static void menus(){
+        System.out.println("1. Mostrar artículos.\r\n" + //
+                "2. Venta a cliente.\r\n" + //
+                "3. Compra a proveedor.\r\n" + //
+                "4. Gestionar artículos.\r\n" + //
+                "5. Salir.");
     }
-
-    /**
-     * Método utilizado para confirmar la venta de un artículo
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @param id Identificador único del artículo
-     * @param cantidad Cantidad a vender del artículo
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> confirmarVenta(ArrayList<Articulo> listaArtículos, int id, int cantidad) {
-        float precioTotal = listaArtículos.get(id).getPrecioVenta();
-        Scanner lector = new Scanner(System.in);
-        precioTotal *= cantidad;
-
-        System.out.println("El precio total sería: " + cantidad * precioTotal+(cantidad * precioTotal*(21/100)));
-
-        System.out.println("Desea realizar la operación? (Si / No)");
-        String opcion = lector.nextLine();
-        opcion = opcion.toLowerCase();
-
-        if (opcion.equals("si")) listaArtículos.get(id).setStock(listaArtículos.get(id).getStock()-cantidad);
-        return listaArtículos;
-    }
-
-    /**
-     * Método utilizado para confirmar la compra de un artículo
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> realizarCompra(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        int id=999999999, cantidad = 0;
-        String nombreProveedor;
-
-        System.out.print("Introduce el identificador del artículo: ");
-        String auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) id = Integer.parseInt(auxiliar);
-        else System.err.println("Identificador inválido");
-
-        System.out.print("Introduce el nombre del proveedor: ");
-        auxiliar = lector.nextLine();
-        if (auxiliar.matches("[a-zA-Z]+")) nombreProveedor=auxiliar;
-        else System.err.println("Nombre inválido");
-
-        System.out.print("Introduce la cantidad a comprar: ");
-        auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) cantidad = Integer.parseInt(auxiliar);
-        else System.err.println("Cantidad inválida");
-
-        for (int i = 0; i < listaArtículos.size(); i++) {
-            if (listaArtículos.get(i).getIdentificador() == id) confirmarCompra(listaArtículos, id, cantidad);
-        }
-        return listaArtículos;
-    }
-
-    /**
-     * Método utilizado para confirmar la compra de un artículo
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @param id Identificador único del artículo
-     * @param cantidad Cantidad a vender del artículo
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> confirmarCompra(ArrayList<Articulo> listaArtículos, int id, int cantidad) {
-        float precioTotal = listaArtículos.get(id).getPrecioCompra();
-        Scanner lector = new Scanner(System.in);
-        precioTotal *= cantidad;
-
-        System.out.println("El precio total sería: " + cantidad * precioTotal+(cantidad * precioTotal*(21/100)));
-        System.out.println("Desea realizar la operación? (Si / No)");
-        String opcion = lector.nextLine();
-        opcion = opcion.toLowerCase();
-        if (opcion.equals("si")) listaArtículos.get(id).setStock(listaArtículos.get(id).getStock()+cantidad);
-        return listaArtículos;
-    }
-
-    /**
-     * Menu principal
-     * @param listaArtículos Lista con todos los artículos almacenados
-     */
-    public static void menu(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        int opcion = 9;
-        do {
-            System.out.println("1. Mostrar artículos");
-            System.out.println("2. Venta a cliente");
-            System.out.println("3. Compra a proveedor");
-            System.out.println("4. Gestionar artículos");
-            System.out.println("0. Salir");
-
-            String auxiliar = lector.nextLine();
-            if (auxiliar.matches("\\d+")) opcion = Integer.parseInt(auxiliar);
-            else System.err.println("Caracter inválido");
-
-            switch (opcion) {
+    // Primer menu.
+    static void menuUnoPrincipal(ArrayList<Arraysprueba> articulosLista) {
+        System.out.println("Selecciona una opcion: ");
+        System.out.println("1. Mostrar artículos.\r\n" + //
+                "2. Venta a cliente.\r\n" + //
+                "3. Compra a proveedor.\r\n" + //
+                "4. Gestionar artículos.\r\n" + //
+                "5. Salir.");
+        System.out.println("Opcion: ");
+        boolean sali = false; // boolean para un while.
+        while (!sali) {
+            int num = teclado.nextInt(); // opcion de menu uno.
+            switch (num) {
                 case 1:
-                    System.out.println(listaArtículos);
+                    mostrarArticulos(articulosLista);
+                    menus();         
                     break;
                 case 2:
-                    realizarVenta(listaArtículos);
+                    venderArticulo(articulosLista);
+                    menus();
                     break;
                 case 3:
-                    realizarCompra(listaArtículos);
+                    comprarAlProveedor(articulosLista);
+                    menus();
                     break;
                 case 4:
-                    menuVentas(listaArtículos);
+                    subMenu(articulosLista);
                     break;
-                case 0:
-                    System.out.println("Hasta la vista, baby...");
+                case 5:
+                System.out.println("Adios!");
+                    sali = true;
                     break;
                 default:
+                    System.err.println("Opcion incorrecta.");
                     break;
             }
-
-        } while (opcion != 0);
-
+        }
     }
 
-    /**
-     * Método útilizado para añadir artículos nuevos a la lista
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> añadirArticulo(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        int stock = 0;
-        float precioVenta = 0, precioCompra = 0;
-        String nombre = "No establecido";
+    // Creo un array list:
+    //static ArrayList<Arraysprueba> articulo = new ArrayList<>();
 
-        System.out.print("Indica el nombre del artículo: ");
-        String auxiliar = lector.nextLine();
-        if (auxiliar.matches("[a-zA-Z]+")) {
-            nombre = auxiliar;
-        } else System.err.println("Nombre inválido");
-
-        auxiliar ="";
-        System.out.print("Introduce el precio de compra: ");
-        auxiliar = lector.nextLine();
-
-        if (auxiliar.matches("^\\d+,?\\d{0,2}$")) {
-            precioCompra = Float.parseFloat(auxiliar);
-        } else System.err.println("Precio inválido de compra");
-
-        auxiliar ="";
-        System.out.print("Introduce el precio de venta: ");
-        auxiliar = lector.nextLine();
-
-        if (auxiliar.matches("^\\d+,?\\d{0,2}$")) {
-            precioVenta = Float.parseFloat(auxiliar);
-        } else System.err.println("Precio de venta inválido");
-
-        System.out.print("Introduce la cantidad de stock: ");
-        auxiliar = lector.nextLine();
-
-        if (auxiliar.matches("\\d+")) {
-            stock = Integer.parseInt(auxiliar);
-        } else System.err.println("Cantidad de stock inválido");
-
-        listaArtículos.add(new Articulo(nombre, precioCompra, precioVenta, stock));
-        return listaArtículos;
+    // Primera opcion mostrar articulos:
+    public static void mostrarArticulos(ArrayList<Arraysprueba> articulosLista) {
+        for (Arraysprueba item : articulosLista) {
+            System.out.println("ID: "+item.getIdentificador());
+            System.out.println("Nombre del producto: "+item.getNombreProducto());
+            System.out.println("Precio de venta "+item.getPrecioVenta());
+            System.out.println("Precio de compra "+item.getPrecioCompra());
+            System.out.println("Hay "+item.getStock()+" unidades en stock.");
+            System.out.println();
+        }
+        System.out.println();
+        //menuUnoPrincipal();
     }
 
-    /**
-     * Método útilizado para editar un artículo
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> editarArticulo(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        System.out.print("Introduce el id del artículo a modificar: ");
-        String auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) {
-            int id = Integer.parseInt(auxiliar);
-            for (Articulo listaArtículo : listaArtículos) {
-                if (listaArtículo.getIdentificador() == id) {
-                    System.out.print("Introduce el precio de compra: ");
-                    auxiliar = lector.nextLine();
-                    if (auxiliar.matches("^\\d+,?\\d{0,2}$")) {
-                        listaArtículo.setPrecioCompra(Float.parseFloat(auxiliar));
-                    } else System.err.println("Precio inválido, no editado");
+    // Funcion para vender.
+    public static void venderArticulo(ArrayList<Arraysprueba> articulosLista) {
+        System.out.println("Identificador");
+        int id = teclado.nextInt();
+        System.out.println("Cantidad de unidades: ");
+        int canti = teclado.nextInt();
+        System.out.println("Nombre del comprador: ");
+        String name = teclado.nextLine();
 
-                    System.out.print("Introduce el precio de venta: ");
-                    auxiliar = lector.nextLine();
-                    if (auxiliar.matches("^\\d+,?\\d{0,2}$")) {
-                        listaArtículo.setPrecioVenta(Float.parseFloat(auxiliar));
-                    } else System.err.println("Precio inválido, no editado");
+        for (int i = 0; i < articulosLista.size(); i++) {
+            if (articulosLista.get(i).getIdentificador() == id) {
+                if (canti <= articulosLista.get(i).getStock()) {
+                    double precio = articulosLista.get(i).getPrecioVenta();
+                    double precioTotal = (canti * precio + (canti * precio *(21 / 100)));
+    
+                    System.out.println("Total a pagar: " + precioTotal);
+                    System.out.println("¿Desea seguir con la compra?(si/no).");
+                    String respuesta = teclado.nextLine();
 
-
-                    System.out.print("Introduce la cantidad de stock: ");
-                    auxiliar = lector.nextLine();
-                    if (auxiliar.matches("\\d+")) {
-                        listaArtículo.setStock(Integer.parseInt(auxiliar));
-                    } else System.err.println("Cantidad in");
+                    if (respuesta.toLowerCase().equals("si")) {
+                        articulosLista.get(i).setStock(articulosLista.get(i).getStock() - canti);
+                        System.out.println("Operacion realizada con exito.");
+                    } else if (respuesta.toLowerCase().equals("no")) {
+                        System.err.println("Operacion cancelada");
+                    }
                 }
             }
         }
-        return listaArtículos;
+        System.out.println();
+        //menuUnoPrincipal();
     }
 
-    /**
-     * Método útilizado para eliminar un artículo de la lista
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> eliminarArticulo(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        System.out.println("Introduce el id del producto a eliminar");
-        String auxiliar = lector.nextLine();
-        if (auxiliar.matches("\\d+")) {
-            int id = Integer.parseInt(auxiliar);
-            listaArtículos.removeIf(listaArtículo -> listaArtículo.getIdentificador() == id);
-        } else System.err.println("id inválido");
-        return listaArtículos;
+    // Comprar al proveedor.
+    public static void comprarAlProveedor(ArrayList<Arraysprueba> articulosLista) {
+        System.out.println("Identificador");
+        int identi = teclado.nextInt();
+        System.out.println("Cantidad de unidades deseada.");
+        int cantidadDeseada = teclado.nextInt();
+
+        for (int i = 0; i < articulosLista.size(); i++) {
+            if (articulosLista.get(i).getIdentificador() == identi) {
+                Scanner sc = new Scanner(System.in);
+                double precio = articulosLista.get(i).getPrecioCompra();
+                double totalAPagar = cantidadDeseada*precio+(cantidadDeseada*precio*(21/100));
+                System.out.println("Cantidad a pagar " + totalAPagar);
+                System.out.println("¿Desea seguir con la compra?(si/no).");
+                String respuesta = sc.next();
+                sc.nextLine();
+               
+                if (respuesta.toLowerCase().equals("si")) {
+                    articulosLista.get(i).setStock(articulosLista.get(i).getStock()+cantidadDeseada);
+                    System.out.println("Operacion realizada con exito.");
+                } else if (respuesta.toLowerCase().equals("no")) {
+                    System.err.println("Operacion cancelada");
+                }
+            }
+        }
+        System.out.println();
+        menus();
     }
 
-    /**
-     * SubMenu utilizado para Añadir / Editar / Eliminar artículos
-     * @param listaArtículos Lista con todos los artículos almacenados
-     * @return Devuelve la lista actualizada
-     */
-    public static ArrayList<Articulo> menuVentas(ArrayList<Articulo> listaArtículos) {
-        Scanner lector = new Scanner(System.in);
-        int opcion = 9;
-        do {
-            System.out.println("1. Añadir artículo");
-            System.out.println("2. Editar artículo");
-            System.out.println("3. Eliminar artículo");
-            System.out.println("4. Volver");
-            System.out.println("5. Finzalización del programa");
-
-            String auxiliar = lector.nextLine();
-            if (auxiliar.matches("\\d+")) opcion = Integer.parseInt(auxiliar);
-            else System.err.println("Caracter inválido");
-
-            switch (opcion) {
+    // Submenu con 3 opciones.
+    static void subMenu(ArrayList<Arraysprueba> articulosLista) {
+        boolean salir = false;
+        while (!salir) {
+            System.out.println("Seleciona una opcion de las siguentes: ");
+            System.out.println("1. Añadir artículo \n2. Editar artículo \n3. Eliminar artículo \n4. Volver");
+            int numerin = teclado.nextInt();
+            switch (numerin) {
                 case 1:
-                    añadirArticulo(listaArtículos);
+                    aniadirArticulo(articulosLista);
                     break;
                 case 2:
-                    editarArticulo(listaArtículos);
+                    editarArticulo(articulosLista);
                     break;
                 case 3:
-                    eliminarArticulo(listaArtículos);
+                    eliminarProductSubmenu(articulosLista);
                     break;
                 case 4:
-                    menu(listaArtículos);
-                    break;
-                case 5:
-                    System.out.println("Volveré...");
+                    menus();
+                    salir=true;
                     break;
                 default:
-                    System.err.println("Opción inválida");
+                    System.err.println("Opcion incorrecta.");
                     break;
             }
-        } while (opcion != 5);
-        exit(1);
-        return listaArtículos;
+        }
     }
+
+    // Aqui agregamos las funciones del submenu.
+    // Funcion para añadir articulos. se pediran datos que luego se almacenan en
+    // article y añadir a un arraylist principal..
+    public static void aniadirArticulo(ArrayList<Arraysprueba> articulosLista) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nombre del producto: ");
+        String name = sc.nextLine();
+        System.out.println("Precio de venta: ");
+        double precioDeVenta = teclado.nextDouble();
+        System.out.println("Precio de compra al proveedor: ");
+        double priceProveedor = teclado.nextDouble();
+        System.out.println("Unidades en stock: ");
+        int stockUniti = teclado.nextInt();
+        Arraysprueba article = new Arraysprueba(name, precioDeVenta, priceProveedor, stockUniti);
+        articulosLista.add(article);
+    }
+
+    // Funcion para editar un articulo el nombre es final asique podremos modificar
+    // los otros atributos:
+    public static void editarArticulo(ArrayList<Arraysprueba> articulosLista) {
+        System.out.println("Cual es el id del articulo: ");
+        // En mi caso el id de los productos van a ser los numeros naturales ordenados
+        // 1,2,3,4....
+        int id = teclado.nextInt();
+        for (int i = 0; i < articulosLista.size(); i++) {
+            if (articulosLista.get(i).getIdentificador() == id) {
+                System.out.println("Nuevo precio para el articulo de venta: " + id);
+                double newPriceVen = teclado.nextDouble();
+                System.out.println("Precio compra al proveedor: ");
+                double newPriceComProv = teclado.nextDouble();
+                System.out.println("Unidades en stock: ");
+                int unitisStock = teclado.nextInt();
+                // Agregamos los datos.
+                articulosLista.get(i).setPrecioCompra(newPriceComProv);
+                articulosLista.get(i).setPrecioVenta(newPriceVen);
+                articulosLista.get(i).setStock(unitisStock);
+            }
+        }
+    }
+
+    // Funcion eliminar producto.
+    public static void eliminarProductSubmenu(ArrayList<Arraysprueba> articulosLista) {
+        System.out.println("Cual es el id del articulo: ");
+        // En mi caso el id de los productos van a ser los numeros naturales ordenados
+        // 1,2,3,4....
+        int id = teclado.nextInt();
+        for (int i = 0; i < articulosLista.size(); i++) {
+            if (articulosLista.get(i).getIdentificador() == id) {
+                articulosLista.remove(i);
+            } else
+                System.err.println("id inválido");
+        }
+    }
+
+    /**
+     * Programa main
+     */
 
     public static void main(String[] args) {
-        ArrayList<Articulo> listaArtículos = new ArrayList<>();
-        menu(listaArtículos);
+        ArrayList<Arraysprueba> articulo = new ArrayList<>();
+        Arraysprueba zapas = new Arraysprueba("Nike nocta", 300, 70, 4);
+        Arraysprueba camisa = new Arraysprueba("Camisa gucci", 200, 100, 19);
+        articulo.add(zapas);
+        articulo.add(camisa);
+        menuUnoPrincipal(articulo);
     }
 }
-
-public class T8E8 { }
