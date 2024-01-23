@@ -1,7 +1,5 @@
-package ies.thiar.pruebas;
-
+package ies.thiar.arraylist;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
