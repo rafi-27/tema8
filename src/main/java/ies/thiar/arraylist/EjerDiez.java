@@ -8,11 +8,8 @@ public class EjerDiez {
     //(i % 5 == 0)
 
     public static void main(String[] args) {
-        multiplosDeNumeros(5, 5);
+        multiplosDeNumeros(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
     }
-
-
-
 
     public static void multiplosDeNumeros(int filas, int columnas){
         Scanner teclado = new Scanner(System.in);
@@ -46,6 +43,7 @@ public class EjerDiez {
             conti++;
         }
         teclado.close();
+        System.out.println();
 
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz.length; j++) {
