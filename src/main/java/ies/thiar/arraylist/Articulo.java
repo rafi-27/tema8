@@ -320,6 +320,7 @@ class Tienda {
      */
 
     public static void main(String[] args) {
+        //Todo se edita mediante listas.
         Articulo zapas = new Articulo("Nike nocta", 300, 70, 4);
         Articulo camisa = new Articulo("Camisa gucci", 200, 100, 19);
         articulo.add(zapas);
