@@ -1,7 +1,4 @@
 package ies.thiar.retos;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ejemplo {
