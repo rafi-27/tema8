@@ -1,7 +1,5 @@
 package ies.thiar.retos;
 
-import java.util.Arrays;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class primerReto {
@@ -14,18 +12,26 @@ public class primerReto {
         int ancho = Integer.parseInt(args[1]);
         int cantidadMinas = Integer.parseInt(args[2]);
         primerReto buscaMinas = new primerReto();
-        int[][] tablero = buscaMinas.crearTablero(alto,ancho,cantidadMinas);
+        // crear tablero
+        int[][] tablero = buscaMinas.crearTablero(alto, ancho, cantidadMinas);
+        // Hacemos tiradas que nos devuelve si en la posicion -1 o -2 si es cero.
+        System.out.println("Hacemos tiradas que nos devuelve si en la posicion -1 o -2 si es cero");
         buscaMinas.tirada(tablero, 2, 2);
         buscaMinas.tirada(tablero, 2, 1);
         buscaMinas.tirada(tablero, 2, 0);
         buscaMinas.tirada(tablero, 0, 0);
         buscaMinas.tirada(tablero, 0, 1);
+        // Mostramos tablero si el completo es true, mostrará la matriz completa y si es
+        // false si es 0 o -1 un espacio en blanco y si es un -2 mostrará una X.
         buscaMinas.mostrarMatriz(tablero, true);
-        System.out.println("Diference");
+        System.out.println(
+                "Mostramos tablero si el completo es true,  mostrará la matriz completa y si es false si es 0 o -1 un espacio en blanco y si es un -2 mostrará una X.");
         buscaMinas.mostrarMatriz(tablero, false);
-        System.out.println("otra");
+        // Otro tablero sin modificaciones solo mostrara los numeros de minas que hay.
+        System.out.println("Otro tablero sin modificaciones solo mostrara los numeros de minas que hay.");
         int[][] otroTablero = buscaMinas.crearTablero(alto, ancho, cantidadMinas);
         buscaMinas.rellenarMatriz(otroTablero);
+        buscaMinas.mostrarMatriz(otroTablero, true);
     }
 
     /**
@@ -98,6 +104,7 @@ public class primerReto {
             System.out.println();
         }
     }
+
     /**
      * Crea una función de nombre rellenarMatriz a la que se le pasa una matriz de
      * números enteros y recorrerá la matriz y
@@ -111,34 +118,99 @@ public class primerReto {
      * "Abajo: " + matriz[fila + 1][columna]
      * "Izquierda: " + matriz[fila][columna - 1]
      * "Derecha: " + matriz[fila][columna + 1]
+     * 
+     * if (matriz[i -1][j] == -1) {
+     * matriz[i][j] += 1;
+     * }
+     * if (matriz[i + 1][j] == -1) {
+     * matriz[i][j] += 1;
+     * }
+     * if (matriz[i][j - 1] == -1) {
+     * matriz[i][j] += 1;
+     * }
+     * if (matriz[i][j + 1] == -1) {
+     * matriz[i][j] += 1;
+     * }
+     * i-1, j-1
+     * i-1,j
+     * i-1,j+1
+     */
+    /**
+     * 0,0 0,1 0,2
+     * i,j i,j i,j
+     * 1,0 1,1 1,2
+     * i,j i,j i,j
+     * 2,0 2,1 2,2
+     * i,j i,j i,j
+     * 
+     * @param matriz
+     *               if(fila!=0){
+     * 
+     *               }
      */
 
     private void rellenarMatriz(int[][] matriz) {
-        int fila = 1;
-        int columna = 1;
+        int cont = 0;
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
-                if (matriz[i][j] == 0) {
-                    if (matriz[fila - 1][columna] == -1) {
-                        matriz[i][j] += 1;
-                    }
-                    if (matriz[fila + 1][columna] == -1) {
-                        matriz[i][j] += 1;
-                    }
-                    if (matriz[fila][columna - 1] == -1) {
-                        matriz[i][j] += 1;
-                    }
-                    if (matriz[fila][columna + 1] == -1) {
-                        matriz[i][j] += 1;
+                // Columna cero
+                if (j == 0) {
+                        // Derecha
+                        if (matriz[i][j + 1] == -1) {
+                            cont++;
+                        }
+                        // Abajo
+                        if (matriz[i + 1][j] == -1) {
+                            cont++;
+                        }
+                        // Diagonal
+                        if (matriz[i + 1][j + 1] == -1) {
+                            cont++;
+                        }
+                } else if (i == 0) {
+                        if (matriz[i+1][j] == -1) {
+                            cont++;
+                        }
+                } else if (i != 0 && j != 0) {
+                    // General
+                    if (matriz[i][j] == 0) {
+                        // Derecha
+                        if(matriz[i][j + 1] == -1){
+                            cont++;
+                        }
+                        // Izquierda
+                        if (matriz[i][j - 1] == -1) {
+                            cont++;
+                        }
+                        // Arriba
+                        if (matriz[i - 1][j] == -1) {
+                            cont++;
+                        }
+                        // Abajo
+                        if (matriz[i + 1][j] == -1) {
+                            cont++;
+                        }
+                        // Diagonales de arriba izquierda
+                        if (matriz[i - 1][j - 1] == -1) {
+                            cont++;
+                        }
+                        // Diagonal de arriba derecha
+                        if (matriz[i - 1][j + 1] == -1) {
+                            cont++;
+                        }
+                        // Diagonal de abajo izquieda
+                        if (matriz[i + 1][j - 1] == -1) {
+                            cont++;
+                        }
+                        // Diagonal de abajo derecha
+                        if (matriz[i + 1][j - 1] == -1) {
+                            cont++;
+                        }
                     }
                 }
+                matriz[i][j] = cont;
+                cont = 0;
             }
-        }
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[0].length; j++) {
-                System.out.print(String.format("%-3d", matriz[i][j]));
-            }
-            System.out.println();
         }
     }
 }
