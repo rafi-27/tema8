@@ -12,6 +12,8 @@ public class primerReto {
         int ancho = Integer.parseInt(args[1]);
         int cantidadMinas = Integer.parseInt(args[2]);
         primerReto buscaMinas = new primerReto();
+
+
         // crear tablero
         int[][] tablero = buscaMinas.crearTablero(alto, ancho, cantidadMinas);
         // Hacemos tiradas que nos devuelve si en la posicion -1 o -2 si es cero.
@@ -93,18 +95,28 @@ public class primerReto {
      * Haz que la matriz se vea de forma correcta en formato filas y columnas.
      */
     private void mostrarMatriz(int[][] matriz, boolean completo) {
-        for (int[] fila : matriz) {
-            for (int valor : fila) {
-                if (completo || valor == -2) {
-                    System.out.print(String.format("%-3d", valor));
-                } else {
-                    System.out.print((valor == 0 || valor == -1) ? " " : "X");
+        if (completo) {
+            for (int[] fila : matriz) {
+                for (int valor : fila) {
+                    System.out.printf("%4d", valor);
                 }
+                System.out.println();
             }
-            System.out.println();
+        } else {
+            for (int[] fila : matriz) {
+                for (int valor : fila) {
+                    if (valor == 0) {
+                        System.out.printf("%3s ", " "); // Espacio en blanco
+                    } else if (valor == -1) {
+                        System.out.printf("%3s ", "X"); // Valor -1 es "X"
+                    } else {
+                        System.out.printf("%3d ", valor); // Otros valores numéricos
+                    }
+                }
+                System.out.println();
+            }
         }
     }
-
     /**
      * Crea una función de nombre rellenarMatriz a la que se le pasa una matriz de
      * números enteros y recorrerá la matriz y
@@ -151,8 +163,8 @@ public class primerReto {
 
     private void rellenarMatriz(int[][] matriz) {
         int cont = 0;
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[0].length; j++) {
+        for (int i = 0; i < matriz.length-1; i++) {
+            for (int j = 0; j < matriz[0].length-1; j++) {
                 // Columna cero
                 if (j == 0) {
                         // Derecha

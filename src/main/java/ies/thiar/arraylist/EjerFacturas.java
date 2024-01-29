@@ -2,8 +2,6 @@ package ies.thiar.arraylist;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /** CLASE FACTURA */
@@ -93,117 +91,117 @@ public class EjerFacturas {
     // Importe total: inicialmente cero, y se va actualizando siempre que se
     // añadan/eliminen líneas.
 
+    /** Clase LINEA DE FACTURA: */
+    static class lineaFactura {
+        /**
+         * Un número indeterminado de lineaFactura que contienen:
+         * Descripción del producto
+         * Precio unitario
+         * Cantidad de unidades
+         * Porcentaje de descuento: 5% para líneas con más de 10 unidades.
+         * Importe total de la línea.
+         */
+
+        private String descripcion;
+        private double precioUnitario;
+        private int cantidadUnidades;
+
+        private double importTotal = 0;
+
+        public lineaFactura(String descripcion, double precioUnitario, int cantidadUnidades) {
+            this.descripcion = descripcion;
+            this.precioUnitario = precioUnitario;
+            this.cantidadUnidades = cantidadUnidades;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public double getPrecioUnitario() {
+            return precioUnitario;
+        }
+
+        public void setPrecioUnitario(double precioUnitario) {
+            this.precioUnitario = precioUnitario;
+        }
+
+        public int getCantidadUnidades() {
+            return cantidadUnidades;
+        }
+
+        public void setCantidadUnidades(int cantidadUnidades) {
+            this.cantidadUnidades = cantidadUnidades;
+        }
+
+        public double getImportTotal() {
+            return importTotal;
+        }
+
+        public void setImportTotal(double importTotal) {
+            this.importTotal = importTotal;
+        }
+
+        public int dameDescuento(){
+            if (cantidadUnidades>10) return 5;
+                else return 0;
+        }
+
+        public double importTotal(){
+            return(this.cantidadUnidades * this.precioUnitario * (100 - this.dameDescuento())/100);
+        }
+
+        @Override
+        public String toString() {
+            return "lineaFactura [descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", cantidadUnidades="
+                    + cantidadUnidades + ", importTotal=" + importTotal + "]";
+        }
+
+        int menu(){
+            Scanner entrada = new Scanner(System.in);
+                System.out.println("Facturas");
+                System.out.println("1 - Alta Factura");
+                System.out.println("2 - Añadir línea");
+                System.out.println("3 - Eliminar línea");
+                System.out.println("4 - Mostrar Factura");
+                System.out.println("0 - Salir");
+                System.out.print("Introduce la opción deseada:");
+                return Integer.parseInt(entrada.nextLine());
+        }
+
+        void altaFactura(){
+            Scanner entrada = new Scanner(System.in);
+            System.out.print("Introduce el número de la factura:");
+            int id = entrada.nextInt();
+            System.out.print("Introduce el número de cliente:");
+            int cliente = entrada.nextInt();
+            EjerFacturas factura = new EjerFacturas(id,cliente);
+        }
+
+        void altaLinea() {
+            Scanner entrada = new Scanner(System.in);
+            System.out.print("Introduce la descripción del producto: ");
+            String descripcion = entrada.nextLine();
+            System.out.print("Introduce el precio unitario del producto: ");
+            double precioU = Double.parseDouble(entrada.nextLine());
+            System.out.print("Introduce la cantidad de unidades: ");
+            int cantidad = Integer.parseInt(entrada.nextLine());
+            añadirLinea(descripcion, precioU, cantidad);
+            System.out.println("Linea añadida correctamente");
+        }
+
+        void bajaLinea() {
+            Scanner entrada = new Scanner(System.in);
+            System.out.print("Introduce el número de línea a borrar: ");
+            int linea = Integer.parseInt(entrada.nextLine());
+            eliminarLinea(linea);
+            System.out.println("Línea eliminada correctamente");
+        }
+
+    }
 }
 
-/** Clase LINEA DE FACTURA: */
-class lineaFactura {
-    /**
-     * Un número indeterminado de lineaFactura que contienen:
-     * Descripción del producto
-     * Precio unitario
-     * Cantidad de unidades
-     * Porcentaje de descuento: 5% para líneas con más de 10 unidades.
-     * Importe total de la línea.
-     */
-
-    private String descripcion;
-    private double precioUnitario;
-    private int cantidadUnidades;
-    
-    private double importTotal = 0;
-
-    public lineaFactura(String descripcion, double precioUnitario, int cantidadUnidades) {
-        this.descripcion = descripcion;
-        this.precioUnitario = precioUnitario;
-        this.cantidadUnidades = cantidadUnidades;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-    public int getCantidadUnidades() {
-        return cantidadUnidades;
-    }
-
-    public void setCantidadUnidades(int cantidadUnidades) {
-        this.cantidadUnidades = cantidadUnidades;
-    }
-
-    public double getImportTotal() {
-        return importTotal;
-    }
-
-    public void setImportTotal(double importTotal) {
-        this.importTotal = importTotal;
-    }
-
-    public int dameDescuento(){
-        if (cantidadUnidades>10) return 5;
-            else return 0;
-    }
-
-    public double importTotal(){
-        return(this.cantidadUnidades * this.precioUnitario * (100 - this.dameDescuento())/100);
-    }
-
-    @Override
-    public String toString() {
-        return "lineaFactura [descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", cantidadUnidades="
-                + cantidadUnidades + ", importTotal=" + importTotal + "]";
-    }
-
-    int menu(){
-        Scanner entrada = new Scanner(System.in);
-            System.out.println("Facturas");
-            System.out.println("1 - Alta Factura");
-            System.out.println("2 - Añadir línea");
-            System.out.println("3 - Eliminar línea");
-            System.out.println("4 - Mostrar Factura");
-            System.out.println("0 - Salir");
-            System.out.print("Introduce la opción deseada:");
-            return Integer.parseInt(entrada.nextLine());
-    }
-
-    void altaFactura(){
-        Scanner entrada = new Scanner(System.in);
-        System.out.print("Introduce el número de la factura:");
-        int id = entrada.nextInt();
-        System.out.print("Introduce el número de cliente:");
-        int cliente = entrada.nextInt();
-        EjerFacturas factura = new EjerFacturas(id,cliente);
-    }
-
-    void altaLinea() {
-        Scanner entrada = new Scanner(System.in);
-        System.out.print("Introduce la descripción del producto: ");
-        String descripcion = entrada.nextLine();
-        System.out.print("Introduce el precio unitario del producto: ");
-        double precioU = Double.parseDouble(entrada.nextLine());
-        System.out.print("Introduce la cantidad de unidades: ");
-        int cantidad = Integer.parseInt(entrada.nextLine());
-        EjerFacturas.añadirLinea(descripcion, precioU, cantidad);
-        System.out.println("Linea añadida correctamente");
-    }
-
-    void bajaLinea() {
-        Scanner entrada = new Scanner(System.in);
-        System.out.print("Introduce el número de línea a borrar: ");
-        int linea = Integer.parseInt(entrada.nextLine());
-        EjerFacturas.eliminarLinea(linea);
-        System.out.println("Línea eliminada correctamente");
-    }
-
-}
