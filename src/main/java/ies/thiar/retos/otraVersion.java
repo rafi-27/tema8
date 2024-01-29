@@ -63,7 +63,7 @@ public class otraVersion {
         for (int[] fila : matriz) {
             for (int valor : fila) {
                 if (completo || valor == -2) {
-                    System.out.print(String.format("%-3d", valor));
+                    System.out.printf("%4d", valor);
                 } else {
                     System.out.print((valor == 0 || valor == -1) ? " " : "X");
                 }

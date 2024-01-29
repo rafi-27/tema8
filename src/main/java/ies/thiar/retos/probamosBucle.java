@@ -1,10 +1,8 @@
 package ies.thiar.retos;
-
-import javax.imageio.ImageTranscoder;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class probamosBucle {
-    private int[][] tableroPrincipal;
+    //private int[][] tableroPrincipal;
     public static void main(String[] args) {
         probamosBucle tablero = new probamosBucle();
         int[][] mesaUno = new int[5][5];

@@ -13,7 +13,6 @@ public class primerReto {
         int cantidadMinas = Integer.parseInt(args[2]);
         primerReto buscaMinas = new primerReto();
 
-
         // crear tablero
         int[][] tablero = buscaMinas.crearTablero(alto, ancho, cantidadMinas);
         // Hacemos tiradas que nos devuelve si en la posicion -1 o -2 si es cero.
@@ -117,6 +116,7 @@ public class primerReto {
             }
         }
     }
+
     /**
      * Crea una función de nombre rellenarMatriz a la que se le pasa una matriz de
      * números enteros y recorrerá la matriz y
@@ -162,66 +162,45 @@ public class primerReto {
      */
 
     private void rellenarMatriz(int[][] matriz) {
-        int cont = 0;
-        for (int i = 0; i < matriz.length-1; i++) {
-            for (int j = 0; j < matriz[0].length-1; j++) {
-                // Columna cero
-                if (j == 0) {
-                        // Derecha
-                        if (matriz[i][j + 1] == -1) {
-                            cont++;
-                        }
-                        // Abajo
-                        if (matriz[i + 1][j] == -1) {
-                            cont++;
-                        }
-                        // Diagonal
-                        if (matriz[i + 1][j + 1] == -1) {
-                            cont++;
-                        }
-                } else if (i == 0) {
-                        if (matriz[i+1][j] == -1) {
-                            cont++;
-                        }
-                } else if (i != 0 && j != 0) {
-                    // General
-                    if (matriz[i][j] == 0) {
-                        // Derecha
-                        if(matriz[i][j + 1] == -1){
-                            cont++;
-                        }
-                        // Izquierda
-                        if (matriz[i][j - 1] == -1) {
-                            cont++;
-                        }
-                        // Arriba
-                        if (matriz[i - 1][j] == -1) {
-                            cont++;
-                        }
-                        // Abajo
-                        if (matriz[i + 1][j] == -1) {
-                            cont++;
-                        }
-                        // Diagonales de arriba izquierda
-                        if (matriz[i - 1][j - 1] == -1) {
-                            cont++;
-                        }
-                        // Diagonal de arriba derecha
-                        if (matriz[i - 1][j + 1] == -1) {
-                            cont++;
-                        }
-                        // Diagonal de abajo izquieda
-                        if (matriz[i + 1][j - 1] == -1) {
-                            cont++;
-                        }
-                        // Diagonal de abajo derecha
-                        if (matriz[i + 1][j - 1] == -1) {
-                            cont++;
-                        }
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                if (matriz[i][j] != -1) {
+                    int cont = 0;
+
+                    // Arriba
+                    if (i - 1 >= 0 && matriz[i - 1][j] == -1) {
+                        cont++;
                     }
+                    // Abajo
+                    if (i + 1 < matriz.length && matriz[i + 1][j] == -1) {
+                        cont++;
+                    }
+                    // Izquierda
+                    if (j - 1 >= 0 && matriz[i][j - 1] == -1) {
+                        cont++;
+                    }
+                    // Derecha
+                    if (j + 1 < matriz[0].length && matriz[i][j + 1] == -1) {
+                        cont++;
+                    }
+                    // Diagonal superior izquierda
+                    if (i - 1 >= 0 && j - 1 >= 0 && matriz[i - 1][j - 1] == -1) {
+                        cont++;
+                    }
+                    // Diagonal superior derecha
+                    if (i - 1 >= 0 && j + 1 < matriz[0].length && matriz[i - 1][j + 1] == -1) {
+                        cont++;
+                    }
+                    // Diagonal inferior izquierda
+                    if (i + 1 < matriz.length && j - 1 >= 0 && matriz[i + 1][j - 1] == -1) {
+                        cont++;
+                    }
+                    // Diagonal inferior derecha
+                    if (i + 1 < matriz.length && j + 1 < matriz[0].length && matriz[i + 1][j + 1] == -1) {
+                        cont++;
+                    }
+                    matriz[i][j] = cont;
                 }
-                matriz[i][j] = cont;
-                cont = 0;
             }
         }
     }
