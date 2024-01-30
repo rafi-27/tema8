@@ -104,9 +104,9 @@ public class primerReto {
         } else {
             for (int[] fila : matriz) {
                 for (int valor : fila) {
-                    if (valor == 0) {
+                    if (valor == 0 || valor == -1) {
                         System.out.printf("%3s ", " "); // Espacio en blanco
-                    } else if (valor == -1) {
+                    } else if (valor == -2) {
                         System.out.printf("%3s ", "X"); // Valor -1 es "X"
                     } else {
                         System.out.printf("%3d ", valor); // Otros valores numéricos
