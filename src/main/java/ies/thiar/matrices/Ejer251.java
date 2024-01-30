@@ -26,7 +26,7 @@ public class Ejer251 {
             System.out.println("Genero 0 varon 1 mujer");
             datosSalarios[i][0] = teclado.nextInt();
             System.out.println("Salario: ");
-            datosSalarios[i][1] = teclado.nextInt();
+            datosSalarios[0][i] = teclado.nextInt();
 
             if (datosSalarios[i][0] == 0) {
                 mediaHombres += datosSalarios[i][1];

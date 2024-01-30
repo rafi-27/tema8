@@ -330,6 +330,7 @@ public class Arraysprueba {
             ArrayList<Arraysprueba> articulo = new ArrayList<>();
             Arraysprueba zapas = new Arraysprueba("Nike nocta", 300, 70, 4);
             Arraysprueba camisa = new Arraysprueba("Camisa gucci", 200, 100, 19);
+            
             articulo.add(zapas);
             articulo.add(camisa);
             menuUnoPrincipal(articulo);
