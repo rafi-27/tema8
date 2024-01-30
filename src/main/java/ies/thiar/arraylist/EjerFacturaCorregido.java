@@ -55,7 +55,6 @@ public class EjerFacturaCorregido {
     }
 
     public static class lineaFactura {
-
         private String descripcion;
         private double precioUnitario;
         private int cantidadUnidades;

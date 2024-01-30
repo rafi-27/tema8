@@ -2,7 +2,6 @@ package ies.thiar.arraylist;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CuentaBancariaClass {

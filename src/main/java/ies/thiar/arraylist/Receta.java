@@ -1,6 +1,5 @@
 package ies.thiar.arraylist;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,11 +9,10 @@ import java.util.Scanner;
      * Implementa un método main que introduzca por teclado los valores de los atributos para crear una receta. 
      * Se preguntará cuántos ingredientes lleva la receta. Una vez introducidos los valores mostrar la receta.
      */
-
-
 /**
  * Receta
  */
+
 public class Receta {
     //Creamos los atributos:
     private String nombre;

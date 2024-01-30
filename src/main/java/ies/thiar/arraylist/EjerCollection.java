@@ -20,6 +20,7 @@ public class EjerCollection {
         for (int i = 1; i < 7; i++) {
             numerosDos.add(Collections.frequency(numeros,i));
         }
+        
         System.out.println(numerosDos.toString());
         System.out.println("El que mas aparece es: "+(numerosDos.indexOf(Collections.max(numerosDos))+1));
         System.out.println("El que menos aparece es: "+(numerosDos.indexOf(Collections.min(numerosDos))+1));

@@ -13,7 +13,7 @@ public class GenerarN {
 
         int[] numeroElegido = new int[6];
         
-         for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             numeroElegido[i]+= ThreadLocalRandom.current().nextInt(1,50);
         }
 
