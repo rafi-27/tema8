@@ -40,8 +40,6 @@ public class EjerCombinacion {
         int quinto;
         int sexto;
 
-        
-
         primero = Collections.max(copiaDeLista);
         copiaDeLista.remove(copiaDeLista.indexOf(primero));
         

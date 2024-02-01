@@ -1,6 +1,4 @@
 package ies.thiar.Examen;
-
-import java.lang.reflect.Array;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EjerArrays {
