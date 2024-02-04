@@ -10,7 +10,7 @@ public class combinacionMilagrosa {
         int[] arrayDeSeisNumeros = new int[6];
 
         ArrayList<Integer> listaNumeros = new ArrayList<>();
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 50000000; i++) {
             listaNumeros.add(ThreadLocalRandom.current().nextInt(1,50));
         }
 
