@@ -1,15 +1,11 @@
 package ies.thiar.Examen;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CombiProfe {
     public static void main(String[] args) {
-        conbiMil();        
+        conbiMil();
     }
 
 
@@ -26,13 +22,15 @@ public class CombiProfe {
         for (int i = 0; i < vector.length; i++) {
             lista.add(vector[i]);
         }
+
         //Ordeno la lista
         Collections.sort(lista,Collections.reverseOrder());
+
         int[] vecesSalidonumeroGanador = new int[6];
         int[] posicionNumeroGanador = new int[6];
-        //Arrays.sort(vector);
+
         for (int i = 0; i < posicionNumeroGanador.length; i++) {
-            posicionNumeroGanador[i]=vector[i];
+            posicionNumeroGanador[i]=lista.indexOf(i);
         }
 
         for (int i = 0; i < vecesSalidonumeroGanador.length; i++) {
